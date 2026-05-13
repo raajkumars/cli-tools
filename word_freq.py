@@ -12,13 +12,20 @@ def count_words(text):
     return collections.Counter(words)
 
 
+def positive_int(value):
+    v = int(value)
+    if v < 1:
+        raise argparse.ArgumentTypeError(f"N must be >= 1, got {value!r}")
+    return v
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Print the top-N most frequent words in a file."
     )
     parser.add_argument("file", help="Path to the input file")
     parser.add_argument(
-        "--top", type=int, default=10, metavar="N",
+        "--top", type=positive_int, default=10, metavar="N",
         help="Number of top words to display (default: 10)"
     )
     args = parser.parse_args()

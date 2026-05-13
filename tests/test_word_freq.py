@@ -3,6 +3,7 @@ import os
 import sys
 import tempfile
 import unittest
+import uuid
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from word_freq import count_words
@@ -76,7 +77,8 @@ class TestCLI(unittest.TestCase):
             os.unlink(path)
 
     def test_missing_file_exits_nonzero(self):
-        _, code = self._run_cli(["/tmp/no_such_file_xyz.txt"])
+        missing = f"/tmp/word_freq_missing_{uuid.uuid4().hex}.txt"
+        _, code = self._run_cli([missing])
         self.assertNotEqual(code, 0)
 
 
